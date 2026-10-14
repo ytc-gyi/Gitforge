@@ -1,0 +1,192 @@
+# GitForge Configuration File
+# ===========================
+#
+# Copy this file to one of the following locations:
+#   - ./gitforge.toml              (repository-level)
+#   - ~/.config/gitforge/config.toml (user-level)
+#
+# Repository-level settings override user-level settings.
+# Environment variables can be referenced using ${VAR_NAME} syntax.
+
+# =============================================================================
+# [core] — General settings
+# =============================================================================
+[core]
+
+# Default editor for commit messages and interactive operations.
+# Falls back to $EDITOR or $VISUAL environment variables if not set.
+# Examples: "vim", "nvim", "code --wait", "nano"
+editor = "vim"
+
+# Default pager for long output (log, diff, etc.).
+# Falls back to $PAGER environment variable if not set.
+# Set to "" to disable paging.
+pager = "less -R"
+
+# Automatically fetch from remotes in the background.
+# This keeps your local refs up to date without manual fetching.
+auto_fetch = true
+
+# Interval (in seconds) between automatic background fetches.
+# Only used when auto_fetch is enabled. Minimum: 60.
+auto_fetch_interval = 300
+
+# =============================================================================
+# [ui] — User interface settings (applies to TUI and Web UI)
+# =============================================================================
+[ui]
+
+# Color theme for the TUI.
+# Built-in themes: "default", "dark", "light", "solarized", "gruvbox", "nord"
+# You can also specify a path to a custom theme file.
+theme = "default"
+
+# Icon style used in the TUI and output.
+#   "emoji" — Uses Unicode emoji (🔥 📁 ✅)
+#   "nerd"  — Uses Nerd Font glyphs (requires a Nerd Font installed)
+#   "ascii" — Uses plain ASCII characters (*, +, -)
+icons = "emoji"
+
+# Enable mouse support in the TUI.
+# When enabled, you can click on items, scroll with the mouse wheel, etc.
+mouse = true
+
+# Use Unicode box-drawing characters for borders and tables.
+# Disable this if your terminal does not support Unicode.
+unicode = true
+
+# Compact mode reduces padding and spacing in the TUI.
+# Useful for smaller terminal windows.
+compact_mode = false
+
+# =============================================================================
+# [ai] — AI assistant settings
+# =============================================================================
+[ai]
+
+# Enable or disable the AI assistant entirely.
+enabled = false
+
+# AI inference engine to use.
+#   "local" — Run a local GGUF model using built-in inference
+#   "http"  — Connect to an external API (OpenAI-compatible)
+#   "wasm"  — Run a WASM-compiled model in-process
+engine = "local"
+
+# API endpoint for the HTTP engine.
+# Only used when engine = "http".
+# Examples: "http://localhost:11434/v1" (Ollama), "https://api.openai.com/v1"
+endpoint = "http://localhost:11434/v1"
+
+# Model name or path.
+# For "local" engine: path to a GGUF model file, or a model name to auto-download.
+# For "http" engine: the model identifier (e.g., "gpt-4", "codellama").
+# For "wasm" engine: path to a WASM model file.
+model = "codellama"
+
+# Automatically download models when they are not found locally.
+# Only applies to the "local" engine.
+auto_download_models = true
+
+# Number of lines of context to include around diffs when generating AI summaries.
+# Higher values give the AI more context but use more tokens.
+context_lines = 10
+
+# =============================================================================
+# [github] — GitHub integration settings
+# =============================================================================
+[github]
+
+# Personal access token for GitHub API requests.
+# Use an environment variable reference to avoid storing secrets in this file.
+# Create a token at: https://github.com/settings/tokens
+# Required scopes: repo, read:org (for organization repositories)
+token = "${GITHUB_TOKEN}"
+
+# GitHub API host. Change this for GitHub Enterprise Server.
+# Default: "github.com"
+host = "github.com"
+
+# =============================================================================
+# [gitlab] — GitLab integration settings
+# =============================================================================
+[gitlab]
+
+# Personal access token for GitLab API requests.
+# Use an environment variable reference to avoid storing secrets in this file.
+# Create a token at: https://gitlab.com/-/user_settings/personal_access_tokens
+# Required scopes: api, read_repository
+token = "${GITLAB_TOKEN}"
+
+# GitLab API host. Change this for self-hosted GitLab instances.
+# Default: "gitlab.com"
+host = "gitlab.com"
+
+# =============================================================================
+# [plugins] — Plugin system settings
+# =============================================================================
+[plugins]
+
+# Directory where plugins are installed.
+# Relative paths are resolved from the user config directory.
+directory = "~/.config/gitforge/plugins"
+
+# Allow loading plugins that are not cryptographically signed.
+# WARNING: Unsigned plugins could potentially execute arbitrary code.
+# Only enable this if you trust all plugins in your plugins directory.
+allow_unsigned = false
+
+# List of trusted plugin sources (URLs or publisher IDs).
+# Plugins from these sources are treated as trusted even if unsigned.
+trusted_sources = []
+
+# =============================================================================
+# [aliases] — Command aliases
+# =============================================================================
+#
+# Define short aliases for frequently used commands.
+# The alias value is the full command (without the "gitforge" prefix).
+#
+[aliases]
+
+co = "checkout"
+br = "branch"
+st = "status"
+lg = "log --oneline --graph"
+cm = "commit -m"
+
+# =============================================================================
+# [keys] — TUI keybindings
+# =============================================================================
+#
+# Customize the keybindings for the TUI.
+# Values are key names: single characters, or special keys like "tab", "enter",
+# "space", "up", "down", "left", "right", "esc", "ctrl+x", "alt+x".
+#
+[keys]
+
+# Navigation
+switch_panel = "tab"
+move_down = "j"
+move_up = "k"
+select = "enter"
+
+# File operations
+toggle_stage = "space"
+stage = "s"
+
+# Git operations
+commit = "c"
+push = "p"
+pull = "P"
+refresh = "r"
+fetch = "f"
+
+# Views
+diff = "d"
+log = "l"
+branch = "b"
+
+# General
+help = "?"
+quit = "q"
